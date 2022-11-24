@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { Link } from "react-router-dom";
 
 export const COLUMNS = [
   {
@@ -13,6 +14,13 @@ export const COLUMNS = [
     Footer: "Họ tên",
     accessor: "displayName",
     sticky: "left",
+    Cell: ({ value }) => {
+      return (
+        <Link to="#">
+          {value}
+        </Link>
+      )
+    },
   },
 
   {
