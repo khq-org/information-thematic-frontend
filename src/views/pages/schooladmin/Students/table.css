@@ -2,12 +2,16 @@ table {
   font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 100%;
+  /* width:1150px;  */
+  /* flex:1; */
+  /* display: flex; */
 }
 
 table td,
 table th {
   border: 1px solid #ddd;
   padding: 8px;
+  /* display: flex; */
 }
 
 table tr:nth-child(even) {
@@ -22,6 +26,6 @@ table th, tfoot td {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: center;
-  background-color: #4caf50;
-  color: white;
+  background-color: #EAEAEA;
+  color: #4985B2;
 }

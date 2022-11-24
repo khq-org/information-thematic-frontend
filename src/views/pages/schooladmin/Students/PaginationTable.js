@@ -4,15 +4,29 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 
 import { COLUMNS } from "./columns";
+import { COLUMNSPROFILE } from "./columnsProfile";
 import "./table.css";
+import BasicTable from "./BasicTable";
 
+import {
+  CModal,
+  CButton,
+  CModalHeader,
+  CModalBody,
+  CModalTitle,
+  CFormSelect,
+} from "@coreui/react";
+import { Link } from "react-router-dom";
 export const PaginationTable = () => {
   const columns = useMemo(() => COLUMNS, []);
+  const columnsProfile = useMemo(() => COLUMNSPROFILE, []);
 
   const token = localStorage.getItem("access_token");
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
   const [listStudent, setlistStudent] = useState([]);
+  const [profile, setProfile] = useState([]);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -23,8 +37,25 @@ export const PaginationTable = () => {
       } catch (e) {}
     })();
   }, []);
-
+  const getProfile = async (id) => {
+    const { data } = await axios.get(`students/${id}/profile`);
+    console.log(data.data.learningResults);
+    setProfile(
+      data.data.learningResults.sort((a, b) => {
+        const x = a.schoolYear;
+        const y = b.schoolYear;
+        if (x < y) {
+          return -1;
+        }
+        if (x > y) {
+          return 1;
+        }
+        return 0;
+      })
+    );
+  };
   const data = useMemo(() => listStudent, [listStudent]);
+  const dataProfile = useMemo(() => profile, [profile]);
 
   const {
     getTableProps,
@@ -54,6 +85,30 @@ export const PaginationTable = () => {
 
   return (
     <>
+      <CModal
+        size="lg"
+        alignment="center"
+        visible={visible}
+        onClose={() => setVisible(false)}
+      >
+        <CModalHeader>
+          <CModalTitle>
+            <h2>Xem quá trình học tập</h2>
+          </CModalTitle>
+        </CModalHeader>
+        <CModalBody>
+          <BasicTable columns={columnsProfile} data={dataProfile} />
+        </CModalBody>
+      </CModal>
+      <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+        <CButton
+          className="btn btn-primary"
+          type="button"
+          // onClick={() => setVisible(!visible)}
+        >
+          Thêm mới
+        </CButton>
+      </div>
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -61,6 +116,7 @@ export const PaginationTable = () => {
               {headerGroup.headers.map((column) => (
                 <th {...column.getHeaderProps()}>{column.render("Header")}</th>
               ))}
+              <th>Hành động</th>
             </tr>
           ))}
         </thead>
@@ -74,6 +130,35 @@ export const PaginationTable = () => {
                     <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
                   );
                 })}
+                <td>
+                  <Link
+                    onClick={() => {
+                      getProfile(row.original.userId);
+                      setVisible(!visible);
+                    }}
+                    className="view"
+                    title="Xem"
+                    cshools-toggle="tooltip"
+                  >
+                    <i className="material-icons">&#xE417;</i>
+                  </Link>
+                  <Link
+                    // to={`${row.original.userId}`}
+                    className="edit"
+                    title="Sửa"
+                    cshools-toggle="tooltip"
+                  >
+                    <i className="material-icons">&#xE254;</i>
+                  </Link>
+                  <Link
+                    // onClick={() => del(row.original.userId)}
+                    className="delete"
+                    title="Xóa"
+                    cshools-toggle="tooltip"
+                  >
+                    <i className="material-icons">&#xE872;</i>
+                  </Link>
+                </td>
               </tr>
             );
           })}
