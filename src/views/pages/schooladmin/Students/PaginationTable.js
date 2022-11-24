@@ -16,6 +16,10 @@ import {
   CModalTitle,
   CFormSelect,
   CForm,
+  CDropdown,
+  CDropdownToggle,
+  CDropdownMenu,
+  CDropdownItem,
 } from "@coreui/react";
 import { Link } from "react-router-dom";
 export const PaginationTable = () => {
@@ -187,33 +191,32 @@ export const PaginationTable = () => {
                   );
                 })}
                 <td>
-                  <Link
-                    onClick={() => {
-                      getProfile(row.original.userId);
-                      setVisible(!visible);
-                    }}
-                    className="view"
-                    title="Xem"
-                    cshools-toggle="tooltip"
-                  >
-                    <i className="material-icons">&#xE417;</i>
-                  </Link>
-                  <Link
-                    // to={`${row.original.userId}`}
-                    className="edit"
-                    title="Sửa"
-                    cshools-toggle="tooltip"
-                  >
-                    <i className="material-icons">&#xE254;</i>
-                  </Link>
-                  <Link
-                    // onClick={() => del(row.original.userId)}
-                    className="delete"
-                    title="Xóa"
-                    cshools-toggle="tooltip"
-                  >
-                    <i className="material-icons">&#xE872;</i>
-                  </Link>
+                  <CDropdown>
+                    <CDropdownToggle color="white"></CDropdownToggle>
+                    <CDropdownMenu>
+                      <CDropdownItem>
+                        {" "}
+                        <Link
+                          onClick={() => {
+                            getProfile(row.original.userId);
+                            setVisible(!visible);
+                          }}
+                        >
+                          Xem học bạ
+                        </Link>
+                      </CDropdownItem>
+                      <CDropdownItem>
+                        <Link>Thông tin học sinh</Link>
+                      </CDropdownItem>
+                      <CDropdownItem>
+                        <Link
+                        // onClick={() => del(row.original.userId)}
+                        >
+                          Xóa
+                        </Link>
+                      </CDropdownItem>
+                    </CDropdownMenu>
+                  </CDropdown>
                 </td>
               </tr>
             );
