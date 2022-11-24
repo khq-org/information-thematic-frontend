@@ -45,7 +45,7 @@ const TeacherDetail = () => {
         setworkingPosition(data.data.teacher.workingPosition);
         setnationality(data.data.teacher.nationality);
         setusername(data.data.teacher.username);
-      } catch (e) {}
+      } catch (e) { }
     })();
   }, []);
 
@@ -54,7 +54,7 @@ const TeacherDetail = () => {
       try {
         setlistcity(CITY);
         setlistdistrict(DISTRICT);
-      } catch (e) {}
+      } catch (e) { }
     })();
   }, []);
   const setadd = async (code) => {
@@ -204,12 +204,26 @@ const TeacherDetail = () => {
             </div>
             <div className="col-md-12">
               <b>Chức vụ</b>
-              <input
-                type="text"
-                className="form-control"
+              <CFormSelect
                 value={workingPosition}
                 onChange={(e) => setworkingPosition(e.target.value)}
-              />
+              >
+                <option value="Giáo viên toán">Giáo viên toán</option>
+                <option value="Giáo viên văn học">Giáo viên văn học</option>
+                <option value="Giáo viên tiếng anh">Giáo viên tiếng anh</option>
+                <option value="Giáo viên vật lí">Giáo viên vật lí</option>
+                <option value="Giáo viên hóa học">Giáo viên hóa học</option>
+                <option value="Giáo viên sinh học">Giáo viên sinh học</option>
+                <option value="Giáo viên lịch sử">Giáo viên lịch sử</option>
+                <option value="Giáo viên địa lí">Giáo viên địa lí</option>
+                <option value="Giáo viên giáo dục công dân">
+                  Giáo viên giáo dục công dân
+                </option>
+                <option value="Giáo viên thể dục">Giáo viên thể dục</option>
+                <option value="Giáo viên quốc phòng an ninh">
+                  Giáo viên quốc phòng an ninh
+                </option>
+              </CFormSelect>
             </div>
             <div className="col-md-12">
               <b>Tài khoản hệ thống</b>
