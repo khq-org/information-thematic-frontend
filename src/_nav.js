@@ -45,11 +45,6 @@ const _nav = [
         name: "Hồ sơ học sinh",
         to: "/all-students",
       },
-      {
-        component: CNavItem,
-        name: "Đánh giá môn học",
-        to: "/dashboard",
-      },
     ],
   },
   {
