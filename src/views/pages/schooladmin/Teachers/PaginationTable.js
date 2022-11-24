@@ -247,13 +247,37 @@ export const PaginationTable = () => {
                   </div>
                   <div className="col-md-6">
                     Chức vụ
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="chức vụ"
+                    <CFormSelect
                       onChange={(e) => setworkingPosition(e.target.value)}
-                      required
-                    />
+                    >
+                      <option value="Giáo viên toán">Giáo viên toán</option>
+                      <option value="Giáo viên văn học">
+                        Giáo viên văn học
+                      </option>
+                      <option value="Giáo viên tiếng anh">
+                        Giáo viên tiếng anh
+                      </option>
+                      <option value="Giáo viên vật lí">Giáo viên vật lí</option>
+                      <option value="Giáo viên hóa học">
+                        Giáo viên hóa học
+                      </option>
+                      <option value="Giáo viên sinh học">
+                        Giáo viên sinh học
+                      </option>
+                      <option value="Giáo viên lịch sử">
+                        Giáo viên lịch sử
+                      </option>
+                      <option value="Giáo viên địa lí">Giáo viên địa lí</option>
+                      <option value="Giáo viên giáo dục công dân">
+                        Giáo viên giáo dục công dân
+                      </option>
+                      <option value="Giáo viên thể dục">
+                        Giáo viên thể dục
+                      </option>
+                      <option value="Giáo viên quốc phòng an ninh">
+                        Giáo viên quốc phòng an ninh
+                      </option>
+                    </CFormSelect>
                   </div>
                 </div>
                 <div className="mt-5 text-center">
