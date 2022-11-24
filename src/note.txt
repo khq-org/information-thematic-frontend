@@ -1,0 +1,9 @@
+School:
+    chưa update sdt trường
+Use(chung):
+    chưa update giới tính 
+    chưa update ngày sinh
+    chưa trả về ngày sinh(null)
+    chưa cho create ngày sinh
+Teacher:
+    chưa create/update quốc tịch, sdt, nơi sinh
