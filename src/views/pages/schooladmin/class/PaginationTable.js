@@ -29,8 +29,10 @@ export const PaginationTable = () => {
 
   const [listclass, setlistclass] = useState([]);
   const [listyear, setlistyear] = useState([]);
+  const [listteacher, setlistTeacher] = useState([]);
   const [liststudent, setliststudent] = useState([]);
-  const [schoolyear, setschoolyear] = useState("");
+  const [clazz, setclazz] = useState("");
+  const [schoolyear, setschoolyear] = useState(1);
   const [visible, setVisible] = useState(false);
   const [visible2, setVisible2] = useState(false);
 
@@ -41,7 +43,7 @@ export const PaginationTable = () => {
         setlistclass(data.data.items);
         const res = await axios.get("students");
         setliststudent(res.data.data.items);
-        console.log({ res });
+        //console.log({ res });
       } catch (e) {}
     })();
   }, []);
@@ -51,6 +53,9 @@ export const PaginationTable = () => {
         const { data } = await axios.get("schoolyear");
         //console.log({ data });
         setlistyear(data.data.items);
+        const res = await axios.get("teachers");
+        setlistTeacher(res.data.data.items);
+        //console.log({ res });
       } catch (e) {}
     })();
   }, []);
@@ -62,13 +67,13 @@ export const PaginationTable = () => {
       isSpecializedClass,
       subject,
     });
-    console.log(res);
+    //console.log(res);
     window.location.reload();
     //alert("done.");
   };
   const del = async (id) => {
     const res = await axios.delete(`classes/${id}`);
-    console.log(res);
+    //console.log(res);
     setlistclass(listclass.filter((item) => item.classId !== id));
   };
 
@@ -99,6 +104,14 @@ export const PaginationTable = () => {
 
   const { pageIndex, pageSize } = state;
 
+  const getliststudentbyidclass = async (classid) => {
+    const res = await axios.get(
+      `students?schoolYearId=${schoolyear}&classId=${classid}`
+    );
+    setliststudent(res.data.data.items);
+    //console.log({ res });
+    //setVisible2(true);
+  };
   return (
     <>
       <CModal
@@ -153,6 +166,17 @@ export const PaginationTable = () => {
                       onChange={(e) => setsubject(e.target.value)}
                     />
                   </div>
+                  <div className="col-md-12">
+                    Giáo viên chủ nhiệm
+                    <CFormSelect>
+                      {listteacher.map((item) => (
+                        <option
+                          value={item.userId}
+                          label={item.displayName}
+                        ></option>
+                      ))}
+                    </CFormSelect>
+                  </div>
                 </div>
 
                 <div className="mt-5 text-center">
@@ -174,7 +198,7 @@ export const PaginationTable = () => {
       >
         <CModalHeader>
           <CModalTitle>
-            <h2>Danh sách học sinh</h2>
+            <h2>Danh sách học sinh lớp {clazz}</h2>
           </CModalTitle>
         </CModalHeader>
         <CModalBody>
@@ -214,7 +238,7 @@ export const PaginationTable = () => {
           onChange={(e) => setschoolyear(e.target.value)}
         >
           {listyear.map((item) => (
-            <option value={item.schoolYear} label={item.schoolYear}></option>
+            <option value={item.schoolYearId} label={item.schoolYear}></option>
           ))}
         </CFormSelect>
         <CForm className="form-inline ">
@@ -257,7 +281,11 @@ export const PaginationTable = () => {
                 })}
                 <td>
                   <Link
-                    onClick={() => setVisible2(true)}
+                    onClick={() => {
+                      getliststudentbyidclass(row.original.classId);
+                      setclazz(row.original.clazz);
+                      setVisible2(true);
+                    }}
                     className="Xem"
                     title="Xem"
                     cshools-toggle="tooltip"
