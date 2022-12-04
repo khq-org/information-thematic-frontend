@@ -12,7 +12,6 @@ const ClassDetail = () => {
   const [gradeId, setgradeId] = useState(0);
   const [isSpecializedClass, setisSpecializedClass] = useState(false);
   const [subject, setsubject] = useState("");
-  const [teacherID, setteacherId] = useState(0);
   const [listteacher, setlistTeacher] = useState([]);
 
   const { id } = useParams();
@@ -20,14 +19,12 @@ const ClassDetail = () => {
     (async () => {
       try {
         const { data } = await axios.get(`classes/${id}`);
-        //console.log({ data });
+        console.log({ data });
         setclassName(data.data.clazz);
         setgradeId(data.data.grade.gradeId);
         setisSpecializedClass(data.data.specializedClass);
         setsubject(data.data.subject);
-        //setteacherId(data.data.teacher.teacherId);
         const res = await axios.get("teachers");
-        //console.log(res);
         setlistTeacher(res.data.data.items);
       } catch (e) {}
     })();
@@ -95,10 +92,7 @@ const ClassDetail = () => {
             </div>
             <div className="inputDiv">
               Giáo viên chủ nhiệm
-              <CFormSelect
-                value={teacherID}
-                onChange={(e) => setteacherId(e.target.value)}
-              >
+              <CFormSelect>
                 {listteacher.map((item) => (
                   <option value={item.userId} label={item.displayName}></option>
                 ))}
