@@ -45,7 +45,7 @@ const TeacherDetail = () => {
         setworkingPosition(data.data.teacher.workingPosition);
         setnationality(data.data.teacher.nationality);
         setusername(data.data.teacher.username);
-      } catch (e) { }
+      } catch (e) {}
     })();
   }, []);
 
@@ -54,7 +54,7 @@ const TeacherDetail = () => {
       try {
         setlistcity(CITY);
         setlistdistrict(DISTRICT);
-      } catch (e) { }
+      } catch (e) {}
     })();
   }, []);
   const setadd = async (code) => {
