@@ -38,7 +38,7 @@ export const COLUMNS = [
   {
     Header: "Giáo viên chủ nhiệm",
     Footer: "Giáo viên chủ nhiệm",
-    accessor: "",
+    accessor: "teacher.teacher",
     sticky: "left",
   },
 ];

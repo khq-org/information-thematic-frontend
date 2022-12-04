@@ -17,7 +17,7 @@ const ClassDetail = React.lazy(() =>
   import("./views/pages/schooladmin/class/ClassDetail")
 );
 const Class = React.lazy(() => import("./views/pages/schooladmin/class"));
-
+const Calendar = React.lazy(() => import("./views/pages/schooladmin/Calendar"));
 const routes = [
   { path: "/dashboard", exact: true, name: "" },
   { path: "/dashboard", name: "Dashboard", element: Dashboard },
@@ -48,6 +48,11 @@ const routes = [
     path: "/classes/:id",
     name: "Thông tin lớp",
     element: ClassDetail,
+  },
+  {
+    path: "/calendar",
+    name: "Lịch",
+    element: Calendar,
   },
   { path: "/info", name: "Thông tin tài khoản", element: Info },
   { path: "/changepw", name: "Đổi mật khẩu", element: Password },
