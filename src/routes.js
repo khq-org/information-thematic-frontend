@@ -16,6 +16,12 @@ const TeacherDetail = React.lazy(() =>
 const ClassDetail = React.lazy(() =>
   import("./views/pages/schooladmin/class/ClassDetail")
 );
+const StudentDetail = React.lazy(() =>
+  import("./views/pages/schooladmin/Students/StudentDetail")
+);
+const CreateStudent = React.lazy(() =>
+  import("./views/pages/schooladmin/Students/CreateStudent")
+);
 const Class = React.lazy(() => import("./views/pages/schooladmin/class"));
 const Calendar = React.lazy(() => import("./views/pages/schooladmin/Calendar"));
 const routes = [
@@ -26,6 +32,17 @@ const routes = [
     path: "/all-students",
     name: "Danh sách học sinh",
     element: AllStudents,
+  },
+
+  {
+    path: "/all-students/:id",
+    name: "Hồ sơ học sinh",
+    element: StudentDetail,
+  },
+  {
+    path: "/all-students/student",
+    name: "Thêm mới học sinh",
+    element: CreateStudent,
   },
 
   {
