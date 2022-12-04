@@ -73,6 +73,12 @@ const _nav = [
       },
     ],
   },
+  {
+    component: CNavItem,
+    name: "LỊCH",
+    to: "/calendar",
+    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
+  },
 ];
 // const _nav = [
 //   {

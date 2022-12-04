@@ -41,11 +41,11 @@ export const PaginationTable = () => {
   useEffect(() => {
     (async () => {
       try {
-        const res = await axios.get("classes");
-        setlistclass(res.data.data.items);
-        console.log(res);
         const { data } = await axios.get("schoolyear");
+        console.log(data);
         setlistyear(data.data.items);
+        const res = await axios.get("classes?schoolYearId=1");
+        setlistclass(res.data.data.items);
       } catch (e) {}
     })();
   }, []);
@@ -53,7 +53,7 @@ export const PaginationTable = () => {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await axios.get("students");
+        const { data } = await axios.get("students?schoolYearId=1&classId=1");
         //console.log({ data });
         setlistStudent(data.data.items);
       } catch (e) {}
@@ -110,6 +110,11 @@ export const PaginationTable = () => {
     console.log(res);
     setlistStudent(res.data.data.items);
   };
+  const setcl = async (year) => {
+    const res = await axios.get(`classes?schoolYearId=${year}`);
+    console.log(res);
+    setlistclass(res.data.data.items);
+  };
   return (
     <>
       <CModal
@@ -133,7 +138,7 @@ export const PaginationTable = () => {
           className="form-control form-control-sm mr-3 w-25"
           onChange={(e) => {
             setschoolyear(e.target.value);
-            show(e.target.value, clazz);
+            setcl(e.target.value);
           }}
         >
           {listyear?.map((item) => (
@@ -194,27 +199,16 @@ export const PaginationTable = () => {
                   <CDropdown>
                     <CDropdownToggle color="white"></CDropdownToggle>
                     <CDropdownMenu>
-                      <CDropdownItem>
-                        {" "}
-                        <Link
-                          onClick={() => {
-                            getProfile(row.original.userId);
-                            setVisible(!visible);
-                          }}
-                        >
-                          Xem học bạ
-                        </Link>
+                      <CDropdownItem
+                        onClick={() => {
+                          getProfile(row.original.userId);
+                          setVisible(!visible);
+                        }}
+                      >
+                        Xem học bạ
                       </CDropdownItem>
-                      <CDropdownItem>
-                        <Link>Thông tin học sinh</Link>
-                      </CDropdownItem>
-                      <CDropdownItem>
-                        <Link
-                        // onClick={() => del(row.original.userId)}
-                        >
-                          Xóa
-                        </Link>
-                      </CDropdownItem>
+                      <CDropdownItem>Thông tin học sinh</CDropdownItem>
+                      <CDropdownItem>Xóa</CDropdownItem>
                     </CDropdownMenu>
                   </CDropdown>
                 </td>
