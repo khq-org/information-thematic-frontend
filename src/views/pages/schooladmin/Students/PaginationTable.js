@@ -166,13 +166,11 @@ export const PaginationTable = () => {
           />
           <button className="material-icons">search</button>
         </CForm>
-        <CButton
-          className="btn btn-primary"
-          type="button"
-          // onClick={() => setVisible(!visible)}
-        >
-          Thêm mới
-        </CButton>
+        <Link to="student">
+          <CButton className="btn btn-primary" type="button">
+            Thêm mới
+          </CButton>
+        </Link>
       </div>
       <table {...getTableProps()}>
         <thead>
@@ -199,16 +197,24 @@ export const PaginationTable = () => {
                   <CDropdown>
                     <CDropdownToggle color="white"></CDropdownToggle>
                     <CDropdownMenu>
-                      <CDropdownItem
-                        onClick={() => {
-                          getProfile(row.original.userId);
-                          setVisible(!visible);
-                        }}
-                      >
-                        Xem học bạ
+                      <CDropdownItem>
+                        <Link
+                          onClick={() => {
+                            getProfile(row.original.userId);
+                            setVisible(!visible);
+                          }}
+                        >
+                          Xem kết quả học tập
+                        </Link>
                       </CDropdownItem>
-                      <CDropdownItem>Thông tin học sinh</CDropdownItem>
-                      <CDropdownItem>Xóa</CDropdownItem>
+                      <CDropdownItem>
+                        <Link to={`${row.original.userId}`}>
+                          Hồ sơ học sinh
+                        </Link>
+                      </CDropdownItem>
+                      <CDropdownItem>
+                        <Link>Xóa</Link>
+                      </CDropdownItem>
                     </CDropdownMenu>
                   </CDropdown>
                 </td>
