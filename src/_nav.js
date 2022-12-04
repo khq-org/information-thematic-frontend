@@ -29,8 +29,8 @@ const _nav = [
       },
       {
         component: CNavItem,
-        name: "Khai báo dữ liệu",
-        to: "/dashboard",
+        name: "Bắt đầu năm học mới",
+        to: "/startnewyear",
       },
     ],
   },
@@ -72,12 +72,6 @@ const _nav = [
         to: "/classes",
       },
     ],
-  },
-  {
-    component: CNavItem,
-    name: "LỊCH",
-    to: "/calendar",
-    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
   },
 ];
 // const _nav = [

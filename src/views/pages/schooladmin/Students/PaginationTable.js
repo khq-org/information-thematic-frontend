@@ -41,11 +41,11 @@ export const PaginationTable = () => {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await axios.get("schoolyear");
-        console.log(data);
-        setlistyear(data.data.items);
-        const res = await axios.get("classes?schoolYearId=1");
+        const res = await axios.get("classes");
         setlistclass(res.data.data.items);
+        console.log(res);
+        const { data } = await axios.get("schoolyear");
+        setlistyear(data.data.items);
       } catch (e) {}
     })();
   }, []);
@@ -53,7 +53,7 @@ export const PaginationTable = () => {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await axios.get("students?schoolYearId=1&classId=1");
+        const { data } = await axios.get("students");
         //console.log({ data });
         setlistStudent(data.data.items);
       } catch (e) {}
@@ -110,11 +110,6 @@ export const PaginationTable = () => {
     console.log(res);
     setlistStudent(res.data.data.items);
   };
-  const setcl = async (year) => {
-    const res = await axios.get(`classes?schoolYearId=${year}`);
-    console.log(res);
-    setlistclass(res.data.data.items);
-  };
   return (
     <>
       <CModal
@@ -138,7 +133,7 @@ export const PaginationTable = () => {
           className="form-control form-control-sm mr-3 w-25"
           onChange={(e) => {
             setschoolyear(e.target.value);
-            setcl(e.target.value);
+            show(e.target.value, clazz);
           }}
         >
           {listyear?.map((item) => (
@@ -166,11 +161,13 @@ export const PaginationTable = () => {
           />
           <button className="material-icons">search</button>
         </CForm>
-        <Link to="student">
-          <CButton className="btn btn-primary" type="button">
-            Thêm mới
-          </CButton>
-        </Link>
+        <CButton
+          className="btn btn-primary"
+          type="button"
+          // onClick={() => setVisible(!visible)}
+        >
+          Thêm mới
+        </CButton>
       </div>
       <table {...getTableProps()}>
         <thead>
@@ -198,22 +195,25 @@ export const PaginationTable = () => {
                     <CDropdownToggle color="white"></CDropdownToggle>
                     <CDropdownMenu>
                       <CDropdownItem>
+                        {" "}
                         <Link
                           onClick={() => {
                             getProfile(row.original.userId);
                             setVisible(!visible);
                           }}
                         >
-                          Xem kết quả học tập
+                          Xem học bạ
                         </Link>
                       </CDropdownItem>
                       <CDropdownItem>
-                        <Link to={`${row.original.userId}`}>
-                          Hồ sơ học sinh
-                        </Link>
+                        <Link>Thông tin học sinh</Link>
                       </CDropdownItem>
                       <CDropdownItem>
-                        <Link>Xóa</Link>
+                        <Link
+                        // onClick={() => del(row.original.userId)}
+                        >
+                          Xóa
+                        </Link>
                       </CDropdownItem>
                     </CDropdownMenu>
                   </CDropdown>
