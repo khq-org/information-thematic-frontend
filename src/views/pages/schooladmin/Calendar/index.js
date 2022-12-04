@@ -4,7 +4,7 @@ import ReactBigCalendar from "./ReactBigCalendar";
 const Calendar = () => {
   return (
     <>
-      <ReactBigCalendar />
+      <div className="text-center">calendar</div>
     </>
   );
 };
