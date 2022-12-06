@@ -1,6 +1,6 @@
 import "./Admin.css";
 import { Routes, Route, Link } from "react-router-dom";
-import { Home } from "./Home";
+import { Home } from "./Home/index";
 import { InfoAdmin } from "./InfoAdmin";
 import { ChangePW } from "./ChangePW";
 import { SchoolDetail } from "./SchoolDetail";
@@ -18,7 +18,7 @@ function Admin() {
           href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"
           rel="stylesheet"
         />
-        {/* <link
+        <link
           rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         ></link>
@@ -30,7 +30,7 @@ function Admin() {
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Roboto"
-        ></link> */}
+        ></link>
 
         <header className="p-2 bg-while text-bg-dark text-center">
           <h5>ADMINISTRATOR</h5>

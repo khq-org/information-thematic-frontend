@@ -1,5 +1,11 @@
 import React, { useMemo } from "react";
-import { useTable, usePagination } from "react-table";
+import {
+  useTable,
+  usePagination,
+  useSortBy,
+  useFilters,
+  useGlobalFilter,
+} from "react-table";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
@@ -21,6 +27,8 @@ import {
   CDropdownMenu,
   CDropdownItem,
 } from "@coreui/react";
+import { GlobalFilter } from "./../GlobalFilter";
+
 import { Link } from "react-router-dom";
 export const PaginationTable = () => {
   const columns = useMemo(() => COLUMNS, []);
@@ -94,16 +102,22 @@ export const PaginationTable = () => {
     pageCount,
     setPageSize,
     prepareRow,
+
+    setGlobalFilter,
   } = useTable(
     {
       columns,
       data,
       initialState: { pageIndex: 0 },
     },
+
+    useFilters,
+    useGlobalFilter,
+    useSortBy,
     usePagination
   );
 
-  const { pageIndex, pageSize } = state;
+  const { pageIndex, pageSize, globalFilter } = state;
 
   const show = async (year, cl) => {
     const res = await axios.get(`students?schoolYearId=${year}&classId=${cl}`);
@@ -133,7 +147,7 @@ export const PaginationTable = () => {
         </CModalBody>
       </CModal>
       <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-        Năm học:
+        <span className="mt-1">Năm học:</span>
         <CFormSelect
           className="form-control form-control-sm mr-3 w-25"
           onChange={(e) => {
@@ -146,7 +160,7 @@ export const PaginationTable = () => {
             <option value={item.schoolYearId} label={item.schoolYear}></option>
           ))}
         </CFormSelect>
-        Lớp:
+        <span className="mt-1">Lớp:</span>
         <CFormSelect
           className="form-control form-control-sm mr-3 w-25"
           onChange={(e) => {
@@ -158,27 +172,33 @@ export const PaginationTable = () => {
             <option value={items.classId} label={items.clazz}></option>
           ))}
         </CFormSelect>
-        <CForm className="form-inline ">
-          <input
-            className="form-control form-control-sm mr-3 w-75"
-            type="text"
-            placeholder="Tìm kiếm..."
-            aria-label="Search"
-          />
-          <button className="material-icons">search</button>
-        </CForm>
+
+        <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
         <Link to="student">
           <CButton className="btn btn-primary" type="button">
             Thêm mới
           </CButton>
         </Link>
       </div>
+
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  {column.render("Header")}
+
+                  <span>
+                    {column.isSorted
+                      ? column.isSortedDesc
+                        ? " 🔽"
+                        : " 🔼"
+                      : ""}
+                  </span>
+
+                  {/* <div>{column.canFilter ? column.render('Filter') : null}</div> */}
+                </th>
               ))}
               <th>Hành động</th>
             </tr>

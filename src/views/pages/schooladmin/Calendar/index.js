@@ -16,7 +16,6 @@ import {
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getDate, getDay, isToday } from "date-fns";
 
 const Calendar = () => {
   const token = localStorage.getItem("access_token");
@@ -27,7 +26,8 @@ const Calendar = () => {
   const [listCalendar, setlistCalendar] = useState([]);
   const [clazz, setclazz] = useState(1);
   const [visible, setVisible] = useState(false);
-  const [title, settitle] = useState("");
+  const [listsubject, setlistsubject] = useState([]);
+  const [title, settitle] = useState(true);
   const day = [
     "Monday",
     "Tuesday",
@@ -37,11 +37,33 @@ const Calendar = () => {
     "Saturday",
   ];
   const tiet = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  var mapSubjects = {
+    Biological: "Sinh học",
+    Chemistry: "Hóa học",
+    Civic_Education: "Giáo dục công dân",
+    Defense_Education: "Giáo dục quốc phòng",
+    English: "Tiếng Anh",
+    Geographic: "Địa lý",
+    History: "Lịch Sử",
+    Informatics: "Tin học",
+    Literature: "Ngữ văn",
+    Maths: "Toán học",
+    Physic: "Vật lý",
+    Physical_Education: "Thể dục",
+    Technology: "Tin học",
+  };
 
   const [calendarEventName, setcalendarEventName] = useState("");
   const [calendarEventType, setcalendarEventType] = useState("Study");
   const [classIds, setclassIds] = useState([1]);
-  const [userIds, setuserIds] = useState([0]);
+  const [userIds, setuserIds] = useState([1]);
+  const [schoolYearId, setschoolYearId] = useState(1);
+  const [lessonStart, setlessonStart] = useState(0);
+  const [lessonFinish, setlessonFinish] = useState(0);
+  const [subjectId, setsubjectId] = useState(0);
+  const [dayOfWeek, setdayOfWeek] = useState("");
+  const [listteacher2, setlistTeacher2] = useState([]);
+  const [id, setid] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -62,6 +84,9 @@ const Calendar = () => {
         );
         //console.log(data);
         setlistCalendar(data.data.items);
+        const res = await axios.get("subjects");
+        //console.log(res);
+        setlistsubject(res.data.data.items);
       } catch (e) {}
     })();
   }, []);
@@ -71,6 +96,7 @@ const Calendar = () => {
         const { data } = await axios.get("teachers");
         //console.log({ data });
         setlistTeacher(data.data.items);
+        setlistTeacher2(data.data.items);
       } catch (e) {}
     })();
   }, []);
@@ -78,7 +104,7 @@ const Calendar = () => {
     const { data } = await axios.get(
       `calendars?classId=${id}&calendarType=Study`
     );
-    console.log(data);
+    //console.log(data);
     setlistCalendar(data.data.items);
   };
   const findcalendar = (tiet, day) => {
@@ -86,20 +112,196 @@ const Calendar = () => {
       return element.dayOfWeek === day && element.lessonStart === tiet;
     });
   };
+  const settc = (id) => {
+    //console.log(listsubject);
+    //console.log(id);
+    //console.log(listsubject[id - 1]?.subject);
+    //const d = listteacher.filter((item) => item.workingPosition === listsubject[id + 1]?.subject);
+    setcalendarEventName(listsubject[id - 1]?.subject);
+    setlistTeacher2(
+      listteacher.filter(
+        (item) => item.workingPosition === listsubject[id - 1]?.subject
+      )
+    );
+  };
+  const save = async (e) => {
+    try {
+      if (title) {
+        const response = await axios.post("calendars", {
+          calendarEventName,
+          calendarEventType,
+          classIds,
+          userIds,
+          schoolYearId,
+          lessonStart,
+          lessonFinish,
+          dayOfWeek,
+          subjectId,
+          semesterId: 1,
+        });
+      } else {
+        const response = await axios.put(`calendars/${id}`, {
+          calendarEventName,
+          calendarEventType,
+          classIds,
+          userIds,
+          schoolYearId,
+          lessonStart,
+          lessonFinish,
+          dayOfWeek,
+          subjectId,
+          semesterId: 1,
+        });
+        console.log(response);
+      }
+
+      setVisible(false);
+      setc(clazz);
+    } catch (err) {
+      if (err.response?.status) {
+        window.alert("Trùng lịch.");
+      }
+    }
+  };
+  const sua = async (id) => {
+    setid(id);
+    const { data } = await axios.get(`calendars/${id}`);
+    console.log(data);
+    setcalendarEventName(data.data.calendarEvent?.calendarEvent);
+
+    setsubjectId(
+      listsubject.find((item) => {
+        return item.subject === data.data.calendarEvent?.subjectName;
+      })?.subjectId
+    );
+    setuserIds([data.data.users[0]?.userId]);
+    setlessonStart(data.data.calendarEvent?.lessonStart);
+    setlessonFinish(data.data.calendarEvent?.lessonFinish);
+    setdayOfWeek(data.data.calendarEvent?.dayOfWeek);
+    setVisible(true);
+    settitle(false);
+  };
+  const del = async (id) => {
+    if (window.confirm("Bạn có chắc muốn xóa lịch này?")) {
+      setVisible(false);
+      setlistCalendar(
+        listCalendar.filter((item) => item.calendarEventId !== id)
+      );
+      const { data } = await axios.delete(`calendars/${id}`);
+      //console.log(data);
+    }
+  };
 
   return (
     <>
       <CModal
-        size="lg"
         alignment="center"
         visible={visible}
         onClose={() => setVisible(false)}
       >
         <CModalHeader>
-          <CModalTitle>{title}</CModalTitle>
+          <CModalTitle>
+            {title ? <div>Thêm mới</div> : <div>Sửa</div>}
+          </CModalTitle>
         </CModalHeader>
         <CModalBody>
-          <div className="container-form"></div>
+          <table className="table">
+            <tr>
+              <td style={{ width: "30%" }}>Lớp</td>
+              <td>
+                <CFormSelect
+                  defaultValue={clazz}
+                  onChange={(e) => {
+                    setclassIds([e.target.value]);
+                  }}
+                >
+                  {listclass?.map((items) => (
+                    <option value={items.classId} label={items.clazz}></option>
+                  ))}
+                </CFormSelect>
+              </td>
+            </tr>
+            <tr>
+              <td>Môn học</td>
+              <td>
+                <CFormSelect
+                  defaultValue={subjectId}
+                  onChange={(e) => {
+                    setsubjectId(Number(e.target.value));
+                    settc(e.target.value);
+                  }}
+                >
+                  <option>Môn học</option>
+                  {listsubject?.map((item) => (
+                    <option value={item.subjectId}>
+                      {mapSubjects[item.subject.replace(" ", "_")]}
+                    </option>
+                  ))}
+                </CFormSelect>
+              </td>
+            </tr>
+            <tr>
+              <td>Giáo viên</td>
+              <td>
+                <CFormSelect
+                  defaultValue={userIds[0]}
+                  onChange={(e) => setuserIds([Number(e.target.value)])}
+                >
+                  <option>Giáo viên</option>
+                  {listteacher2?.map((item) => (
+                    <option value={item.userId}>{item.displayName}</option>
+                  ))}
+                </CFormSelect>
+              </td>
+            </tr>
+            <tr>
+              <td>Tiết</td>
+              <td>
+                <CFormSelect
+                  defaultValue={lessonStart}
+                  onChange={(e) => {
+                    setlessonStart(Number(e.target.value));
+                    setlessonFinish(Number(e.target.value));
+                  }}
+                >
+                  <option>Tiết học</option>
+                  {tiet.map((item) => (
+                    <option value={item}>{item}</option>
+                  ))}
+                </CFormSelect>
+              </td>
+            </tr>
+            <tr>
+              <td>Thứ</td>
+              <td>
+                <CFormSelect
+                  defaultValue={dayOfWeek}
+                  onChange={(e) => setdayOfWeek(e.target.value)}
+                >
+                  <option>Ngày trong tuần</option>
+                  <option value="Monday">Thứ 2</option>
+                  <option value="Tuesday">Thứ 3</option>
+                  <option value="Wednesday">Thứ 4</option>
+                  <option value="Thursday">Thứ 5</option>
+                  <option value="Friday">Thứ 6</option>
+                  <option value="Saturday">Thứ 7</option>
+                </CFormSelect>
+              </td>
+            </tr>
+          </table>
+          <div className="mt-5 text-center">
+            <button className="btn btn-primary " onClick={(e) => save()}>
+              {title ? "Thêm mới" : "Lưu thông tin"}
+            </button>
+            &ensp;
+            {title ? (
+              ""
+            ) : (
+              <button className="btn btn-danger " onClick={(e) => del(id)}>
+                Xóa
+              </button>
+            )}
+          </div>
         </CModalBody>
       </CModal>
       <div style={{ height: "60%", width: "100%", padding: "5px 2px 2px 2px" }}>
@@ -112,7 +314,9 @@ const Calendar = () => {
               <tr>
                 <td style={{ textAlign: "center", width: "7%" }}>Năm học:</td>
                 <td>
-                  <CFormSelect>
+                  <CFormSelect
+                    onChange={(e) => setschoolYearId(e.target.value)}
+                  >
                     {listyear?.map((item) => (
                       <option
                         value={item.schoolYearId}
@@ -141,8 +345,12 @@ const Calendar = () => {
                 <td>
                   <CButton
                     onClick={(e) => {
+                      setlessonStart(0);
+                      setdayOfWeek("");
+                      setuserIds([]);
+                      setsubjectId(0);
                       setVisible(true);
-                      settitle("Thêm mới");
+                      settitle(true);
                     }}
                     className="btn btn-primary"
                     type="button"
@@ -176,18 +384,38 @@ const Calendar = () => {
               <tbody>
                 {tiet.map((item) => (
                   <tr>
-                    <td>Tiết{item}</td>
+                    <td>Tiết {item}</td>
                     {day.map((items) => (
-                      <td style={{ width: "14%" }}>
+                      <td
+                        onClick={(e) => {
+                          if (findcalendar(item, items)) {
+                            sua(findcalendar(item, items)?.calendarEventId);
+                          } else {
+                            setlessonStart(item);
+                            setdayOfWeek(items);
+                            setuserIds([]);
+                            setsubjectId(0);
+                            setVisible(true);
+                            settitle(true);
+                          }
+                        }}
+                        style={{ width: "14%" }}
+                      >
                         {findcalendar(item, items) ? (
                           <div>
-                            <CDropdown>
-                              <CDropdownToggle color="white">
-                                {findcalendar(item, items)?.calendarEvent}-
-                                {findcalendar(item, items)?.teacher.lastName}
-                                &nbsp;
-                                {findcalendar(item, items)?.teacher.firstName}
-                              </CDropdownToggle>
+                            {
+                              mapSubjects[
+                                findcalendar(
+                                  item,
+                                  items
+                                )?.calendarEvent.replace(" ", "_")
+                              ]
+                            }
+                            -{findcalendar(item, items)?.teacher.lastName}
+                            &nbsp;
+                            {findcalendar(item, items)?.teacher.firstName}
+                            {/* <CDropdown>
+                              <CDropdownToggle color="white"></CDropdownToggle>
                               <CDropdownMenu>
                                 <CDropdownItem>
                                   <Link
@@ -207,20 +435,10 @@ const Calendar = () => {
                                   </Link>
                                 </CDropdownItem>
                               </CDropdownMenu>
-                            </CDropdown>
+                            </CDropdown> */}
                           </div>
                         ) : (
-                          <div className="text-center">
-                            <Link
-                              className="text-center"
-                              onClick={(e) => {
-                                setVisible(true);
-                                settitle("Thêm mới");
-                              }}
-                            >
-                              <i className="material-icons">&#xe146;</i>
-                            </Link>
-                          </div>
+                          ""
                         )}
                       </td>
                     ))}

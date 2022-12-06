@@ -82,13 +82,13 @@ const _nav = [
     items: [
       {
         component: CNavItem,
-        name: "Lịch thi",
-        to: "/exam",
+        name: "Thời khóa biểu",
+        to: "/calendar",
       },
       {
         component: CNavItem,
-        name: "Thời khóa biểu",
-        to: "/calendar",
+        name: "Lịch thi",
+        to: "/exam",
       },
     ],
   },

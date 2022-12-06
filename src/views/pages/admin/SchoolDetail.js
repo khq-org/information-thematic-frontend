@@ -1,4 +1,3 @@
-import "./CreateSchool.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
@@ -170,71 +169,96 @@ export const SchoolDetail = () => {
                 <h1 className="text-center">School Details</h1>
               </div>
 
-              <div className="row mt-3">
-                <div className="col-md-12">
-                  <b>Name School</b>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={school}
-                    onChange={(e) => setschool(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="col-md-12">
-                  <b>Phone</b>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={phone}
-                    onChange={(e) => setphone(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="col-md-12">
-                  <b>Street</b>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={street}
-                    onChange={(e) => setstreet(e.target.value)}
-                    required
-                  />
-                </div>
+              <table className="table">
+                <tr>
+                  <td>
+                    <b>Name School</b>
+                  </td>
+                  <td>
+                    {" "}
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={school}
+                      onChange={(e) => setschool(e.target.value)}
+                      required
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>Phone</b>
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={phone}
+                      onChange={(e) => setphone(e.target.value)}
+                      required
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>Street</b>
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={street}
+                      onChange={(e) => setstreet(e.target.value)}
+                      required
+                    />
+                  </td>
+                </tr>
 
-                <div className="col-md-12">
-                  <b>District</b>
-                  <CFormSelect
-                    value={district}
-                    onChange={(e) => setdistrict(e.target.value)}
-                  >
-                    {listdistrict.map((item) => (
-                      <option value={item.name} label={item.name}></option>
-                    ))}
-                  </CFormSelect>
-                </div>
-                <div className="col-md-12">
-                  <b>City</b>
-                  <CFormSelect
-                    value={listcity.find((item) => item.name === city)?.code}
-                    onChange={(e) => setadd(e.target.value)}
-                  >
-                    {listcity.map((item) => (
-                      <option value={item.code} label={item.name}></option>
-                    ))}
-                  </CFormSelect>
-                </div>
-                <div className="col-md-12">
-                  <b>Website</b>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={website}
-                    onChange={(e) => setwebsite(e.target.value)}
-                    required
-                  />
-                </div>
-              </div>
+                <tr>
+                  <td>
+                    <b>District</b>
+                  </td>
+                  <td>
+                    <CFormSelect
+                      value={district}
+                      onChange={(e) => setdistrict(e.target.value)}
+                    >
+                      {listdistrict.map((item) => (
+                        <option value={item.name} label={item.name}></option>
+                      ))}
+                    </CFormSelect>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>City</b>
+                  </td>
+                  <td>
+                    <CFormSelect
+                      value={listcity.find((item) => item.name === city)?.code}
+                      onChange={(e) => setadd(e.target.value)}
+                    >
+                      {listcity.map((item) => (
+                        <option value={item.code} label={item.name}></option>
+                      ))}
+                    </CFormSelect>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>Website</b>
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={website}
+                      onChange={(e) => setwebsite(e.target.value)}
+                      required
+                    />
+                  </td>
+                </tr>
+              </table>
 
               <div className="mt-5 text-center">
                 <button
@@ -309,7 +333,7 @@ export const SchoolDetail = () => {
               </CModal>
 
               <br />
-              <table className="table table-success  table-striped">
+              <table className="table  ">
                 <thead>
                   <tr>
                     <th>ID</th>
