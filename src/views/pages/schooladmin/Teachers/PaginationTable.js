@@ -80,6 +80,7 @@ export const PaginationTable = () => {
         const { data } = await axios.get("teachers");
         //console.log({ data });
         setlistTeacher(data.data.items);
+        setPageSize(Number(5));
       } catch (e) {}
     })();
   }, []);
