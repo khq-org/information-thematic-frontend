@@ -7,6 +7,7 @@ export const COLUMNS = [
     accessor: "userId",
     disableFilters: true,
     sticky: "left",
+    sorter: true,
   },
   {
     Header: "Họ tên",
