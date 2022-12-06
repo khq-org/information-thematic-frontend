@@ -125,9 +125,9 @@ const Calendar = () => {
     );
   };
   const save = async (e) => {
-    try {
-      if (title) {
-        const response = await axios.post("calendars", {
+    if (title) {
+      const response = await axios
+        .post("calendars", {
           calendarEventName,
           calendarEventType,
           classIds,
@@ -138,9 +138,17 @@ const Calendar = () => {
           dayOfWeek,
           subjectId,
           semesterId: 1,
-        });
-      } else {
-        const response = await axios.put(`calendars/${id}`, {
+        })
+        .then((e) => {
+          if (e.response) {
+            console.log(e.response);
+            window.alert("Trùng lịch.");
+          }
+        })
+        .catch((e) => {});
+    } else {
+      const response = await axios
+        .put(`calendars/${id}`, {
           calendarEventName,
           calendarEventType,
           classIds,
@@ -151,17 +159,18 @@ const Calendar = () => {
           dayOfWeek,
           subjectId,
           semesterId: 1,
-        });
-        console.log(response);
-      }
-
-      setVisible(false);
-      setc(clazz);
-    } catch (err) {
-      if (err.response?.status) {
-        window.alert("Trùng lịch.");
-      }
+        })
+        .then((e) => {
+          if (e.response) {
+            console.log(e.response);
+            window.alert("Trùng lịch.");
+          }
+        })
+        .catch((e) => {});
     }
+
+    setVisible(false);
+    setc(clazz);
   };
   const sua = async (id) => {
     setid(id);
@@ -305,15 +314,12 @@ const Calendar = () => {
         </CModalBody>
       </CModal>
       <div style={{ height: "60%", width: "100%", padding: "5px 2px 2px 2px" }}>
-        <div
-          classname="GreyBox"
-          style={{ marginRight: "auto", marginLeft: "auto" }}
-        >
-          <table className="table table-dark">
+        <div style={{ marginRight: "auto", marginLeft: "auto" }}>
+          <table className="table table-dark" style={{ border: "0" }}>
             <tbody>
               <tr>
-                <td style={{ textAlign: "center", width: "7%" }}>Năm học:</td>
-                <td>
+                <td style={{ textAlign: "center", width: "10%" }}>Năm học:</td>
+                <td style={{ textAlign: "center", width: "15%" }}>
                   <CFormSelect
                     onChange={(e) => setschoolYearId(e.target.value)}
                   >
@@ -325,12 +331,28 @@ const Calendar = () => {
                     ))}
                   </CFormSelect>
                 </td>
+                <td style={{ textAlign: "center", width: "7%" }}>Học kì:</td>
+                <td style={{ textAlign: "center", width: "10%" }}>
+                  <CFormSelect>
+                    <option value={1}>1</option>
+                    <option value={2}>2</option>
+                  </CFormSelect>
+                </td>
+                <td style={{ textAlign: "center", width: "5%" }}>Khối:</td>
+                <td style={{ textAlign: "center", width: "10%" }}>
+                  <CFormSelect>
+                    <option value={1}>10</option>
+                    <option value={2}>11</option>
+                    <option value={3}>12</option>
+                  </CFormSelect>
+                </td>
                 <td style={{ textAlign: "center", width: "5%" }}>Lớp:</td>
-                <td>
+                <td style={{ textAlign: "center", width: "10%" }}>
                   <CFormSelect
                     onChange={(e) => {
                       setc(e.target.value);
                       setclazz(e.target.value);
+                      setuserIds([Number(e.target.value)]);
                     }}
                   >
                     {listclass?.map((items) => (
@@ -341,11 +363,12 @@ const Calendar = () => {
                     ))}
                   </CFormSelect>
                 </td>
-                <td style={{ textAlign: "center", width: "50%" }}></td>
-                <td>
+
+                <td style={{ textAlign: "end" }}>
                   <CButton
                     onClick={(e) => {
                       setlessonStart(0);
+                      setlessonFinish(0);
                       setdayOfWeek("");
                       setuserIds([]);
                       setsubjectId(0);
@@ -364,11 +387,8 @@ const Calendar = () => {
         </div>
       </div>
       <div style={{ width: "100%", padding: "5px 2px 2px 2px" }}>
-        <div
-          classname="GreyBox"
-          style={{ marginRight: "auto", marginLeft: "auto" }}
-        >
-          <div class="table-wrer-scroll-y my-custom-scrollbar">
+        <div style={{ marginRight: "auto", marginLeft: "auto" }}>
+          <div className="table-wrer-scroll-y my-custom-scrollbar">
             <table className="table table-bordered table-active">
               <thead>
                 <tr>
@@ -384,7 +404,9 @@ const Calendar = () => {
               <tbody>
                 {tiet.map((item) => (
                   <tr>
-                    <td>Tiết {item}</td>
+                    <td className="text-center" style={{ color: "#0d6efd" }}>
+                      Tiết {item}
+                    </td>
                     {day.map((items) => (
                       <td
                         onClick={(e) => {
@@ -392,6 +414,7 @@ const Calendar = () => {
                             sua(findcalendar(item, items)?.calendarEventId);
                           } else {
                             setlessonStart(item);
+                            setlessonFinish(item);
                             setdayOfWeek(items);
                             setuserIds([]);
                             setsubjectId(0);
@@ -399,7 +422,7 @@ const Calendar = () => {
                             settitle(true);
                           }
                         }}
-                        style={{ width: "14%" }}
+                        style={{ width: "15%" }}
                       >
                         {findcalendar(item, items) ? (
                           <div>

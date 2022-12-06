@@ -1,6 +1,6 @@
 table {
-  font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif;
-  border-collapse: collapse;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  /* border-collapse: collapse; */
   width: 100%;
   /* width:1150px;  */
   /* flex:1; */
@@ -22,10 +22,11 @@ table tr:hover {
   background-color: #ddd;
 }
 
-table th, tfoot td {
+table th,
+tfoot td {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: center;
-  background-color: #EAEAEA;
-  color: #4985B2;
+  background-color: #eaeaea;
+  color: #4985b2;
 }

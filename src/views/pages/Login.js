@@ -1,40 +1,46 @@
 import "./Login.css";
 import axios from "axios";
+import jwt_decode from "jwt-decode";
 import { Navigate } from "react-router-dom";
 import { useState } from "react";
 
 export const Login = () => {
   const [username, setUser] = useState("");
   const [password, setPassword] = useState("");
-  const [navigate, setNavigate] = useState(2);
+  const [navigate, setNavigate] = useState("");
+  const [err, seterr] = useState("");
 
   const submit = async (e) => {
     e.preventDefault();
-
-    const { data } = await axios.post(
-      "login",
-      {
-        username,
-        password,
-      },
-      { withCredentials: true }
-    );
-
-    localStorage.setItem("access_token", data.access_token);
-    //const a = localStorage.getItem("access_token");
-    // axios.defaults.headers.common["Authorization"] = `Bearer ${a}`;
-
-    //console.log({ a });
-    // const a = JSON.parse(data.access_token);
-    // console.log(a);
-    const lg = username.localeCompare("admin");
-    setNavigate(lg);
+    try {
+      const { data } = await axios.post(
+        "login",
+        {
+          username,
+          password,
+        },
+        { withCredentials: true }
+      );
+      localStorage.setItem("access_token", data.access_token);
+      //console.log(jwt_decode(data.access_token)?.roles[0]);
+      setNavigate(jwt_decode(data.access_token)?.roles[0]);
+      seterr("");
+    } catch (e) {
+      //window.alert("failed");
+      seterr("Đăng nhập thất bại. Kiểm tra lại.");
+    }
   };
 
-  if (navigate === 0) {
+  if (navigate === "ADMIN") {
     return <Navigate to="/admin/home" />;
   }
-  if (navigate === 1) {
+  if (navigate === "SCHOOL") {
+    return <Navigate to="/dashboard" />;
+  }
+  if (navigate === "TEACHER") {
+    return <Navigate to="/dashboard" />;
+  }
+  if (navigate === "STUDENT") {
     return <Navigate to="/dashboard" />;
   }
   return (
@@ -93,6 +99,9 @@ export const Login = () => {
             />
           </div>
           <br />
+          <div className="text-end" style={{ color: "red" }}>
+            {err}
+          </div>
           <br />
           <button type="submit">Đăng nhập</button>
         </form>

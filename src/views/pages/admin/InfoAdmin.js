@@ -129,7 +129,7 @@ export const InfoAdmin = () => {
       >
         Success!
       </CAlert>
-      <div className="container rounded bg-gradient mt-0 mb-0 ">
+      <div className="" style={{ marginLeft: "250px" }}>
         <div className="row">
           <div className="col-md-3 border-right">
             <div className="d-flex flex-column align-items-center text-center p-3 py-5">
@@ -144,7 +144,7 @@ export const InfoAdmin = () => {
               <span className="text-black-50">{email}</span>
             </div>
           </div>
-          <div className="col-md-6 border-right">
+          <div className="col-md-5 border-right">
             <div className=" py-5 ">
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <h2 className="text-right">Profile Settings</h2>
