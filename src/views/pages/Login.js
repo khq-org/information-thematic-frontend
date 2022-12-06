@@ -25,6 +25,8 @@ export const Login = () => {
     // axios.defaults.headers.common["Authorization"] = `Bearer ${a}`;
 
     //console.log({ a });
+    // const a = JSON.parse(data.access_token);
+    // console.log(a);
     const lg = username.localeCompare("admin");
     setNavigate(lg);
   };
@@ -78,14 +80,14 @@ export const Login = () => {
           <div className="inputs">
             <input
               type="text"
-              placeholder="user name"
+              placeholder="Tài khoản"
               onChange={(e) => setUser(e.target.value)}
               required
             />
             <br />
             <input
               type="password"
-              placeholder="password"
+              placeholder="Mật khẩu"
               onChange={(e) => setPassword(e.target.value)}
               required
             />
