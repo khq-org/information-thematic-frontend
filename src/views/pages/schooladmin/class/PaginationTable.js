@@ -161,13 +161,19 @@ export const PaginationTable = () => {
                     </CFormSelect>
                   </div>
                   <div className="col-md-12">
-                    Môn học lớp chọn
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder=""
-                      onChange={(e) => setsubject(e.target.value)}
-                    />
+                    Môn học chuyên
+                    <CFormSelect onChange={(e) => setsubject(e.target.value)}>
+                      <option value="">Không chuyên</option>
+                      <option value="Toán">Toán</option>
+                      <option value="Văn học">Văn học</option>
+                      <option value="Tiếng Anh">Tiếng Anh</option>
+                      <option value="Vật lí">Vật lí</option>
+                      <option value="Hóa học">Hóa học</option>
+                      <option value="Sinh học">Sinh học</option>
+                      <option value="Lịch sử">Lịch sử</option>
+                      <option value="Địa lí">Địa lí</option>
+                      <option value="Tin học">Tin học</option>
+                    </CFormSelect>
                   </div>
                   <div className="col-md-12">
                     Giáo viên chủ nhiệm
