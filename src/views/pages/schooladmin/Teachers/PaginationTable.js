@@ -331,7 +331,7 @@ export const PaginationTable = () => {
                 })}
                 <td>
                   <Link
-                    to={`${row.original.userId}`}
+                    to={`/all-teachers/${row.original.userId}`}
                     className="edit"
                     title="Sửa"
                     cshools-toggle="tooltip"

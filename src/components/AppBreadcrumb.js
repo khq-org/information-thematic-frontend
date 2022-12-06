@@ -33,7 +33,7 @@ const AppBreadcrumb = () => {
 
   return (
     <CBreadcrumb className="m-0 ms-2">
-      <CBreadcrumbItem href="/school">Trang chủ</CBreadcrumbItem>
+      <CBreadcrumbItem href="/dashboard">Trang chủ</CBreadcrumbItem>
       {breadcrumbs.map((breadcrumb, index) => {
         return (
           <CBreadcrumbItem
