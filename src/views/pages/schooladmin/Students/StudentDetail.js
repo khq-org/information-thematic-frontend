@@ -124,7 +124,7 @@ const StudentDetail = () => {
                     <input
                       type="text"
                       value={lastName}
-                      style={{ width: "180px", fontWeight: "bold" }}
+                      style={{ width: "180px" }}
                       onChange={(e) => setlastName(e.target.value)}
                     />
                   </td>
@@ -145,7 +145,7 @@ const StudentDetail = () => {
                     <input
                       type="text"
                       value={placeOfBirth}
-                      style={{ width: "230px", fontWeight: "bold" }}
+                      style={{ width: "230px" }}
                       onChange={(e) => setplaceOfBirth(e.target.value)}
                     />
                   </td>
@@ -178,7 +178,7 @@ const StudentDetail = () => {
                     <input
                       type="text"
                       value={nationality}
-                      style={{ width: "230px", fontWeight: "bold" }}
+                      style={{ width: "230px" }}
                       onChange={(e) => setnationality(e.target.value)}
                     />
                   </td>

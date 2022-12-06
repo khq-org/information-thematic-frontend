@@ -109,7 +109,7 @@ const CreateStudent = () => {
                   <td>
                     <input
                       type="text"
-                      style={{ width: "180px", fontWeight: "bold" }}
+                      style={{ width: "180px" }}
                       onChange={(e) => setlastName(e.target.value)}
                     />
                   </td>
@@ -128,7 +128,7 @@ const CreateStudent = () => {
                   <td>
                     <input
                       type="text"
-                      style={{ width: "230px", fontWeight: "bold" }}
+                      style={{ width: "230px" }}
                       onChange={(e) => setplaceOfBirth(e.target.value)}
                     />
                   </td>
@@ -160,7 +160,7 @@ const CreateStudent = () => {
                   <td>
                     <input
                       type="text"
-                      style={{ width: "230px", fontWeight: "bold" }}
+                      style={{ width: "230px" }}
                       onChange={(e) => setnationality(e.target.value)}
                     />
                   </td>
