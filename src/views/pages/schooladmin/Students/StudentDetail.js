@@ -25,27 +25,29 @@ const StudentDetail = () => {
   const [nationality, setnationality] = useState("");
   const [listcity, setlistcity] = useState([]);
   const [listdistrict, setlistdistrict] = useState([]);
+  const [classId, setclassId] = useState(1);
 
   const { id } = useParams();
 
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await axios.get(`teachers/${id}`);
+        const { data } = await axios.get(`students/${id}`);
         console.log({ data });
-        setfirstName(data.data.teacher.firstName);
-        setlastName(data.data.teacher.lastName);
-        setgender(data.data.teacher.gender);
-        setdateOfBirth(data.data.teacher.dateOfBirth);
-        setphone(data.data.teacher.phone);
-        setemail(data.data.teacher.email);
-        setplaceOfBirth(data.data.teacher.placeOfBirth);
-        setstreet(data.data.teacher.street);
-        setdistrict(data.data.teacher.district);
-        setcity(data.data.teacher.city);
-        setworkingPosition(data.data.teacher.workingPosition);
-        setnationality(data.data.teacher.nationality);
-        setusername(data.data.teacher.username);
+        setfirstName(data.data.student.firstName);
+        setlastName(data.data.student.lastName);
+        setgender(data.data.student.gender);
+        setdateOfBirth(data.data.student.dateOfBirth);
+        setphone(data.data.student.phone);
+        setemail(data.data.student.email);
+        setplaceOfBirth(data.data.student.placeOfBirth);
+        setstreet(data.data.student.street);
+        setdistrict(data.data.student.district);
+        setcity(data.data.student.city);
+        //setworkingPosition(data.data.students.workingPosition);
+        setnationality(data.data.student.nationality);
+
+        setusername(data.data.student.username);
       } catch (e) {}
     })();
   }, []);
@@ -68,8 +70,22 @@ const StudentDetail = () => {
   const save = async (e) => {
     e.preventDefault();
 
-    const { data } = await axios.put(`teachers/${id}`, {});
-    alert("done.");
+    const { data } = await axios.put(`students/${id}`, {
+      firstName,
+      lastName,
+      dateOfBirth,
+      placeOfBirth,
+      gender,
+      phone,
+      email,
+      street,
+      district,
+      city,
+      nationality,
+      workingPosition,
+      classId,
+    });
+    console.log(data);
   };
   return (
     <>
@@ -107,13 +123,20 @@ const StudentDetail = () => {
                   <td>
                     <input
                       type="text"
+                      value={lastName}
                       style={{ width: "180px", fontWeight: "bold" }}
+                      onChange={(e) => setlastName(e.target.value)}
                     />
                   </td>
 
                   <td classname="auto-style11">Tên:</td>
                   <td>
-                    <input type="text" style={{ width: "180px" }} />
+                    <input
+                      type="text"
+                      value={firstName}
+                      style={{ width: "180px" }}
+                      onChange={(e) => setfirstName(e.target.value)}
+                    />
                   </td>
                   <td style={{ textAlign: "right" }} classname="auto-style14">
                     Nơi sinh:
@@ -121,21 +144,32 @@ const StudentDetail = () => {
                   <td>
                     <input
                       type="text"
+                      value={placeOfBirth}
                       style={{ width: "230px", fontWeight: "bold" }}
+                      onChange={(e) => setplaceOfBirth(e.target.value)}
                     />
                   </td>
                 </tr>
                 <tr>
                   <td classname="auto-style11">Giới tính:</td>
                   <td>
-                    <CFormSelect value={gender} style={{ width: "180px" }}>
+                    <CFormSelect
+                      onChange={(e) => setgender(e.target.value)}
+                      value={gender}
+                      style={{ width: "180px" }}
+                    >
                       <option value={true}>Nam</option>
                       <option value={false}>Nữ</option>
                     </CFormSelect>
                   </td>
                   <td classname="auto-style11">Ngày sinh:</td>
                   <td classname="auto-style1">
-                    <input type="date" style={{ width: "180px" }} />
+                    <input
+                      type="date"
+                      style={{ width: "180px" }}
+                      value={dateOfBirth}
+                      onChange={(e) => setdateOfBirth(e.target.value)}
+                    />
                   </td>
                   <td style={{ textAlign: "right" }} classname="auto-style14">
                     Quốc tịch:
@@ -143,7 +177,9 @@ const StudentDetail = () => {
                   <td>
                     <input
                       type="text"
+                      value={nationality}
                       style={{ width: "230px", fontWeight: "bold" }}
+                      onChange={(e) => setnationality(e.target.value)}
                     />
                   </td>
                 </tr>
@@ -182,7 +218,7 @@ const StudentDetail = () => {
                   <td colSpan={2}>
                     <input
                       type="text"
-                      defaultValue="102190265@sv1.dut.udn.vn"
+                      value={username}
                       style={{ width: "350px" }}
                     />
                   </td>
@@ -190,7 +226,12 @@ const StudentDetail = () => {
                     Email cá nhân:
                   </td>
                   <td colSpan={2}>
-                    <input type="text" style={{ width: "310px" }} />
+                    <input
+                      type="text"
+                      style={{ width: "310px" }}
+                      value={email}
+                      onChange={(e) => setemail(e.target.value)}
+                    />
                   </td>
                 </tr>
 
@@ -199,7 +240,12 @@ const StudentDetail = () => {
                     Điện thoại:
                   </td>
                   <td colSpan={2}>
-                    <input type="text" style={{ width: "350px" }} />
+                    <input
+                      type="text"
+                      style={{ width: "350px" }}
+                      value={phone}
+                      onChange={(e) => setphone(e.target.value)}
+                    />
                   </td>
                   <td classname="auto-style10">&nbsp;</td>
                   <td colSpan={2}>&nbsp;</td>
@@ -214,9 +260,10 @@ const StudentDetail = () => {
                   <td colSpan={3}>
                     <input
                       type="text"
-                      defaultValue="08 Hà Văn Tĩnh"
+                      value={street}
                       title="Cần nhập thông tin cụ thể Số nhà, Đường (hoặc Xóm, Thôn) để ghép với Thành phố, Quận, Phường (hoặc Tỉnh, Huyện, Xã) dưới đây"
                       style={{ width: "350px" }}
+                      onChange={(e) => setstreet(e.target.value)}
                     />
                   </td>
                   <td></td>
@@ -406,6 +453,15 @@ const StudentDetail = () => {
               </tbody>
             </table>
           </div>
+        </div>
+        <div className="mt-5 text-center">
+          <button
+            className="btn btn-primary profile-button"
+            type="button"
+            onClick={save}
+          >
+            Cập nhật thông tin
+          </button>
         </div>
         <br />
         <br />

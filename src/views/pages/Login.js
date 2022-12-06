@@ -33,7 +33,7 @@ export const Login = () => {
     return <Navigate to="/admin/home" />;
   }
   if (navigate === 1) {
-    return <Navigate to="/school" />;
+    return <Navigate to="/dashboard" />;
   }
   return (
     <div className="box-form">
