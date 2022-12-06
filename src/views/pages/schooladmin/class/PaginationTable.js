@@ -1,5 +1,11 @@
 import React, { useMemo } from "react";
-import { useTable, usePagination } from "react-table";
+import {
+  useTable,
+  usePagination,
+  useSortBy,
+  useFilters,
+  useGlobalFilter,
+} from "react-table";
 import { Link, useNavigate } from "react-router-dom";
 
 import { COLUMNS } from "./columns";
@@ -15,6 +21,7 @@ import {
   CFormSelect,
   CForm,
 } from "@coreui/react";
+import { GlobalFilter } from "./../GlobalFilter";
 
 export const PaginationTable = () => {
   const columns = useMemo(() => COLUMNS, []);
@@ -90,16 +97,22 @@ export const PaginationTable = () => {
     pageCount,
     setPageSize,
     prepareRow,
+
+    setGlobalFilter,
   } = useTable(
     {
       columns,
       data,
       initialState: { pageIndex: 0 },
     },
+
+    useFilters,
+    useGlobalFilter,
+    useSortBy,
     usePagination
   );
 
-  const { pageIndex, pageSize } = state;
+  const { pageIndex, pageSize, globalFilter } = state;
 
   const getliststudentbyidclass = async (classid) => {
     const res = await axios.get(
@@ -161,13 +174,19 @@ export const PaginationTable = () => {
                     </CFormSelect>
                   </div>
                   <div className="col-md-12">
-                    Môn học lớp chọn
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder=""
-                      onChange={(e) => setsubject(e.target.value)}
-                    />
+                    Môn học chuyên
+                    <CFormSelect onChange={(e) => setsubject(e.target.value)}>
+                      <option value="">Không chuyên</option>
+                      <option value="Toán">Toán</option>
+                      <option value="Văn học">Văn học</option>
+                      <option value="Tiếng Anh">Tiếng Anh</option>
+                      <option value="Vật lí">Vật lí</option>
+                      <option value="Hóa học">Hóa học</option>
+                      <option value="Sinh học">Sinh học</option>
+                      <option value="Lịch sử">Lịch sử</option>
+                      <option value="Địa lí">Địa lí</option>
+                      <option value="Tin học">Tin học</option>
+                    </CFormSelect>
                   </div>
                   <div className="col-md-12">
                     Giáo viên chủ nhiệm
@@ -247,15 +266,7 @@ export const PaginationTable = () => {
             <option value={item.schoolYearId} label={item.schoolYear}></option>
           ))}
         </CFormSelect>
-        <CForm className="form-inline ">
-          <input
-            className="form-control form-control-sm mr-3 w-75"
-            type="text"
-            placeholder="Tìm kiếm..."
-            aria-label="Search"
-          />
-          <button className="material-icons">search</button>
-        </CForm>
+        <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
         <CButton
           className="btn btn-primary"
           type="button"
@@ -264,12 +275,25 @@ export const PaginationTable = () => {
           Thêm mới
         </CButton>
       </div>
+
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  {column.render("Header")}
+
+                  <span>
+                    {column.isSorted
+                      ? column.isSortedDesc
+                        ? " 🔽"
+                        : " 🔼"
+                      : ""}
+                  </span>
+
+                  {/* <div>{column.canFilter ? column.render('Filter') : null}</div> */}
+                </th>
               ))}
               <th>Hành động</th>
             </tr>

@@ -1,5 +1,19 @@
 import { format } from "date-fns";
-
+var mapSubjects = {
+  Biological: "Sinh học",
+  Chemistry: "Hóa học",
+  Civic_Education: "Giáo dục công dân",
+  Defense_Education: "Giáo dục quốc phòng",
+  English: "Tiếng Anh",
+  Geographic: "Địa lý",
+  History: "Lịch Sử",
+  Informatics: "Tin học",
+  Literature: "Ngữ văn",
+  Maths: "Toán học",
+  Physic: "Vật lý",
+  Physical_Education: "Thể dục",
+  Technology: "Tin học",
+};
 export const COLUMNS = [
   {
     Header: "Id",
@@ -7,6 +21,7 @@ export const COLUMNS = [
     accessor: "userId",
     disableFilters: true,
     sticky: "left",
+    sorter: true,
   },
   {
     Header: "Họ tên",
@@ -31,30 +46,33 @@ export const COLUMNS = [
       return value ? "Nam" : "Nữ";
     },
   },
-  {
-    Header: "Số nhà",
-    Footer: "Số nhà",
-    accessor: "street",
-    sticky: "left",
-  },
+  // {
+  //   Header: "Địa chỉ",
+  //   Footer: "Địa chỉ",
+  //   accessor: "street",
+  //   sticky: "left",
+  // },
 
+  // {
+  //   Header: "Quận/Huyện",
+  //   Footer: "Quận/Huyện",
+  //   accessor: "district",
+  //   sticky: "left",
+  // },
+  // {
+  //   Header: "Tỉnh/Thành phố",
+  //   Footer: "Tỉnh/Thành phố",
+  //   accessor: "city",
+  //   sticky: "left",
+  // },
   {
-    Header: "Quận/Huyện",
-    Footer: "Quận/Huyện",
-    accessor: "district",
-    sticky: "left",
-  },
-  {
-    Header: "Tỉnh/Thành phố",
-    Footer: "Tỉnh/Thành phố",
-    accessor: "city",
-    sticky: "left",
-  },
-  {
-    Header: "Chức vụ",
-    Footer: "Chức vụ",
+    Header: "Giáo viên bộ môn",
+    Footer: "Giáo viên bộ môn",
     accessor: "workingPosition",
     sticky: "left",
+    Cell: ({ value }) => {
+      return mapSubjects[value.replace(" ", "_")];
+    },
   },
   {
     Header: "Số điện thoại",

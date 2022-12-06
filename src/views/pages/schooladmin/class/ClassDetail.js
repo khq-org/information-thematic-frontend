@@ -84,14 +84,24 @@ const ClassDetail = () => {
                 <option value={false} label="Lớp bình thường"></option>
               </CFormSelect>
             </div>
+
             <div className="inputDiv">
               Môn học
-              <input
-                type="text"
-                className="form-control"
+              <CFormSelect
                 value={subject}
                 onChange={(e) => setsubject(e.target.value)}
-              />
+              >
+                <option value="">Không chuyên</option>
+                <option value="Toán">Toán</option>
+                <option value="Văn học">Văn học</option>
+                <option value="Tiếng Anh">Tiếng Anh</option>
+                <option value="Vật lí">Vật lí</option>
+                <option value="Hóa học">Hóa học</option>
+                <option value="Sinh học">Sinh học</option>
+                <option value="Lịch sử">Lịch sử</option>
+                <option value="Địa lí">Địa lí</option>
+                <option value="Tin học">Tin học</option>
+              </CFormSelect>
             </div>
             <div className="inputDiv">
               Giáo viên chủ nhiệm

@@ -1,4 +1,3 @@
-import "./CreateSchool.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -36,35 +35,6 @@ export const CreateSchool = () => {
   const [user, setUser] = useState("test");
   let navigate = useNavigate();
 
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const { data } = await axios.get(
-  //         "https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1"
-  //       );
-  //       setlistcity(data.data.data);
-  //     } catch (e) {}
-  //   })();
-  // }, []);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const { data } = await axios.get(
-  //         "https://vn-public-apis.fpo.vn/districts/getAll?limit=-1"
-  //       );
-  //       setlistdistrict(data.data.data);
-  //     } catch (e) {}
-  //   })();
-  // }, []);
-  // const setadd = async (code) => {
-  //   const c = listcity.find((item) => item.code === code);
-  //   setcity(c.name);
-  //   const { data } = await axios.get(
-  //     `https://vn-public-apis.fpo.vn/districts/getByProvince?provinceCode=${code}&limit=-1`
-  //   );
-  //   setlistdistrict(data.data.data);
-  // };
   useEffect(() => {
     (async () => {
       try {
@@ -110,94 +80,151 @@ export const CreateSchool = () => {
 
   return (
     <>
-      <div className="container rounded bg-gradient mt-0 mb-0 m-lg-auto">
+      <CModal
+        visible={visible}
+        onClose={() => {
+          navigate(-1);
+        }}
+      >
+        <CModalHeader>
+          <CModalTitle>Account</CModalTitle>
+        </CModalHeader>
+        <CModalBody>
+          <table className="table table-bordered ">
+            <tr>
+              <th>School</th>
+              <th>{school}</th>
+            </tr>
+            <tr>
+              <th>UserAdmin</th>
+              <th>{user}</th>
+            </tr>
+            <tr>
+              <th>PassWord</th>
+              <th>{user}</th>
+            </tr>
+          </table>
+        </CModalBody>
+        <CModalFooter>
+          <CButton
+            color="secondary"
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            OK
+          </CButton>
+        </CModalFooter>
+      </CModal>
+      <div style={{ marginLeft: "250px" }}>
         <form className="row" onSubmit={save}>
-          <div className="col-md-7 border-right">
+          <div className="col-md-6 border-right">
             <div className="p-5 py-3">
               <div className="">
                 <h2 className="text-center">Create Customer</h2>
               </div>
               <br />
 
-              <div className="row mt-3">
-                <div className="col-md-12">
-                  <b>Name School</b>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="name school"
-                    onChange={(e) => setschool(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="col-md-12">
-                  <b>Phone</b>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="phone"
-                    onChange={(e) => setphone(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="col-md-12">
-                  <b>Street</b>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="street"
-                    onChange={(e) => setstreet(e.target.value)}
-                    required
-                  />
-                </div>
-                {/* <div className="col-md-12">
-                  <b>District</b>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="district"
-                    onChange={(e) => setdistrict(e.target.value)}
-                    required
-                  />
-                </div>
+              <table className="table">
+                <tr>
+                  <td>
+                    <b>Name School</b>
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="name school"
+                      onChange={(e) => setschool(e.target.value)}
+                      required
+                    />
+                  </td>
+                </tr>
 
-                <div className="col-md-12">
-                  <b>City</b>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="city"
-                    onChange={(e) => setcity(e.target.value)}
-                    required
-                  />
-                </div> */}
-                <div className="col-md-12">
-                  <b>District</b>
-                  <CFormSelect onChange={(e) => setdistrict(e.target.value)}>
-                    {listdistrict.map((item) => (
-                      <option value={item.name} label={item.name}></option>
-                    ))}
-                  </CFormSelect>
-                </div>
-                <div className="col-md-12">
-                  <b>City</b>
-                  <CFormSelect onChange={(e) => setadd(e.target.value)}>
-                    {listcity.map((item) => (
-                      <option value={item.code} label={item.name}></option>
-                    ))}
-                  </CFormSelect>
-                </div>
-                <div className="col-md-12">
-                  <b>Website</b>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="website"
-                    onChange={(e) => setwebsite(e.target.value)}
-                    required
-                  />
-                </div>
-              </div>
+                <tr>
+                  <td>
+                    <b>Name School</b>
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="name school"
+                      onChange={(e) => setschool(e.target.value)}
+                      required
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>Phone</b>
+                  </td>
+                  <td>
+                    {" "}
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="phone"
+                      onChange={(e) => setphone(e.target.value)}
+                      required
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>Street</b>
+                  </td>
+                  <td>
+                    {" "}
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="street"
+                      onChange={(e) => setstreet(e.target.value)}
+                      required
+                    />
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <b>District</b>
+                  </td>
+                  <td>
+                    <CFormSelect onChange={(e) => setdistrict(e.target.value)}>
+                      {listdistrict.map((item) => (
+                        <option value={item.name} label={item.name}></option>
+                      ))}
+                    </CFormSelect>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>City</b>
+                  </td>
+                  <td>
+                    <CFormSelect onChange={(e) => setadd(e.target.value)}>
+                      {listcity.map((item) => (
+                        <option value={item.code} label={item.name}></option>
+                      ))}
+                    </CFormSelect>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>Website</b>
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="website"
+                      onChange={(e) => setwebsite(e.target.value)}
+                      required
+                    />
+                  </td>
+                </tr>
+              </table>
 
               <div className="mt-5 text-center">
                 <button
@@ -206,43 +233,6 @@ export const CreateSchool = () => {
                 >
                   Create
                 </button>
-
-                <CModal
-                  visible={visible}
-                  onClose={() => {
-                    navigate(-1);
-                  }}
-                >
-                  <CModalHeader>
-                    <CModalTitle>Account</CModalTitle>
-                  </CModalHeader>
-                  <CModalBody>
-                    <table className="table table-bordered ">
-                      <tr>
-                        <th>School</th>
-                        <th>{school}</th>
-                      </tr>
-                      <tr>
-                        <th>UserAdmin</th>
-                        <th>{user}</th>
-                      </tr>
-                      <tr>
-                        <th>PassWord</th>
-                        <th>{user}</th>
-                      </tr>
-                    </table>
-                  </CModalBody>
-                  <CModalFooter>
-                    <CButton
-                      color="secondary"
-                      onClick={() => {
-                        navigate(-1);
-                      }}
-                    >
-                      OK
-                    </CButton>
-                  </CModalFooter>
-                </CModal>
               </div>
             </div>
           </div>
@@ -256,38 +246,54 @@ export const CreateSchool = () => {
               <br />
               <br />
 
-              <div className="col-md-12">
-                <b>First Name</b>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="first name"
-                  onChange={(e) => setfirstName(e.target.value)}
-                  required
-                />
-              </div>
-              <br />
-              <div className="col-md-12">
-                <b>Last Name</b>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="last name"
-                  onChange={(e) => setlastName(e.target.value)}
-                  required
-                />
-              </div>
-              <br />
-              <div className="col-md-12">
-                <b>Email</b>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="email"
-                  onChange={(e) => setemail(e.target.value)}
-                  required
-                />
-              </div>
+              <table className="table">
+                <tr>
+                  <td>
+                    <b>First Name</b>
+                  </td>
+                  <td>
+                    {" "}
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="first name"
+                      onChange={(e) => setfirstName(e.target.value)}
+                      required
+                    />
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <b>Last Name</b>
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="last name"
+                      onChange={(e) => setlastName(e.target.value)}
+                      required
+                    />
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <b>Email</b>
+                  </td>
+                  <td>
+                    {" "}
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="email"
+                      onChange={(e) => setemail(e.target.value)}
+                      required
+                    />
+                  </td>
+                </tr>
+              </table>
             </div>
           </div>
         </form>
