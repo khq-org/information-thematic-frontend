@@ -64,6 +64,8 @@ const Calendar = () => {
   const [dayOfWeek, setdayOfWeek] = useState("");
   const [listteacher2, setlistTeacher2] = useState([]);
   const [id, setid] = useState(0);
+=======
+
 
   useEffect(() => {
     (async () => {
@@ -84,9 +86,11 @@ const Calendar = () => {
         );
         //console.log(data);
         setlistCalendar(data.data.items);
+
         const res = await axios.get("subjects");
         //console.log(res);
         setlistsubject(res.data.data.items);
+
       } catch (e) {}
     })();
   }, []);
@@ -96,7 +100,9 @@ const Calendar = () => {
         const { data } = await axios.get("teachers");
         //console.log({ data });
         setlistTeacher(data.data.items);
+
         setlistTeacher2(data.data.items);
+
       } catch (e) {}
     })();
   }, []);
@@ -104,6 +110,7 @@ const Calendar = () => {
     const { data } = await axios.get(
       `calendars?classId=${id}&calendarType=Study`
     );
+
     //console.log(data);
     setlistCalendar(data.data.items);
   };
@@ -190,16 +197,19 @@ const Calendar = () => {
       const { data } = await axios.delete(`calendars/${id}`);
       //console.log(data);
     }
+
   };
 
   return (
     <>
       <CModal
+
         alignment="center"
         visible={visible}
         onClose={() => setVisible(false)}
       >
         <CModalHeader>
+
           <CModalTitle>
             {title ? <div>Thêm mới</div> : <div>Sửa</div>}
           </CModalTitle>
@@ -302,6 +312,7 @@ const Calendar = () => {
               </button>
             )}
           </div>
+
         </CModalBody>
       </CModal>
       <div style={{ height: "60%", width: "100%", padding: "5px 2px 2px 2px" }}>
@@ -314,9 +325,11 @@ const Calendar = () => {
               <tr>
                 <td style={{ textAlign: "center", width: "7%" }}>Năm học:</td>
                 <td>
+
                   <CFormSelect
                     onChange={(e) => setschoolYearId(e.target.value)}
                   >
+
                     {listyear?.map((item) => (
                       <option
                         value={item.schoolYearId}
@@ -345,12 +358,14 @@ const Calendar = () => {
                 <td>
                   <CButton
                     onClick={(e) => {
+
                       setlessonStart(0);
                       setdayOfWeek("");
                       setuserIds([]);
                       setsubjectId(0);
                       setVisible(true);
                       settitle(true);
+
                     }}
                     className="btn btn-primary"
                     type="button"
@@ -384,6 +399,7 @@ const Calendar = () => {
               <tbody>
                 {tiet.map((item) => (
                   <tr>
+
                     <td>Tiết {item}</td>
                     {day.map((items) => (
                       <td
@@ -415,7 +431,7 @@ const Calendar = () => {
                             &nbsp;
                             {findcalendar(item, items)?.teacher.firstName}
                             {/* <CDropdown>
-                              <CDropdownToggle color="white"></CDropdownToggle>
+
                               <CDropdownMenu>
                                 <CDropdownItem>
                                   <Link
@@ -435,10 +451,12 @@ const Calendar = () => {
                                   </Link>
                                 </CDropdownItem>
                               </CDropdownMenu>
+
                             </CDropdown> */}
                           </div>
                         ) : (
                           ""
+
                         )}
                       </td>
                     ))}
