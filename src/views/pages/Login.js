@@ -38,10 +38,10 @@ export const Login = () => {
     return <Navigate to="/dashboard" />;
   }
   if (navigate === "TEACHER") {
-    return <Navigate to="/dashboard" />;
+    return <Navigate to="/teacher/profile" />;
   }
   if (navigate === "STUDENT") {
-    return <Navigate to="/dashboard" />;
+    return <Navigate to="/student/profile" />;
   }
   return (
     <div className="box-form">
