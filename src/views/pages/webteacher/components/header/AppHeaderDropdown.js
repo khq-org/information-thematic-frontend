@@ -33,7 +33,7 @@ const AppHeaderDropdown = () => {
   return (
     <CDropdown variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
-        <b>Quản trị viên- </b>
+        <b>Giáo viên- </b>
         <CAvatar
           src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
           size="md"
@@ -44,14 +44,14 @@ const AppHeaderDropdown = () => {
           Tài khoản
         </CDropdownHeader>
 
-        <Link to="/info">
+        <Link to="/teacher/profile">
           <CDropdownItem>
             <CIcon icon={cilUser} className="me-2" />
             Thông tin
           </CDropdownItem>
         </Link>
 
-        <Link to="/changepw">
+        <Link to="/teacher/pw">
           <CDropdownItem>
             <CIcon icon={cilLockLocked} className="me-2" />
             Mật khẩu
