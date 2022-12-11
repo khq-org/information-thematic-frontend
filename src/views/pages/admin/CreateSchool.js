@@ -140,21 +140,6 @@ export const CreateSchool = () => {
                     />
                   </td>
                 </tr>
-
-                <tr>
-                  <td>
-                    <b>Name School</b>
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="name school"
-                      onChange={(e) => setschool(e.target.value)}
-                      required
-                    />
-                  </td>
-                </tr>
                 <tr>
                   <td>
                     <b>Phone</b>

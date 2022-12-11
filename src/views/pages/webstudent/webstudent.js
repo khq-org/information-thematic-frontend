@@ -1,7 +1,7 @@
 import React from "react";
 import { AppContent, AppSidebar, AppHeader } from "./components/index";
 
-const WebTeacher = () => {
+const WebStudent = () => {
   return (
     <div>
       <link
@@ -31,4 +31,4 @@ const WebTeacher = () => {
   );
 };
 
-export default WebTeacher;
+export default WebStudent;
