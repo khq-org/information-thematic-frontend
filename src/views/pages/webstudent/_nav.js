@@ -25,7 +25,7 @@ const _nav = [
       {
         component: CNavItem,
         name: "Học bạ",
-        to: "#",
+        to: "/student/studentdetail",
       },
       {
         component: CNavItem,

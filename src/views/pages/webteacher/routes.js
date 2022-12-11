@@ -1,7 +1,6 @@
-import React from "react";
-
 import Profile from "./Profile";
 import ChangePW from "./password";
+import Calendar from "./Calendar";
 const routes = [
   { path: "/profile", exact: true, name: "" },
   {
@@ -13,6 +12,11 @@ const routes = [
     path: "/pw",
     name: "Mật khẩu",
     element: ChangePW,
+  },
+  {
+    path: "/calendar",
+    name: "Thời khóa biểu",
+    element: Calendar,
   },
 ];
 

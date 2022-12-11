@@ -20,6 +20,7 @@ const SchoolAdmin = () => {
         rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Roboto"
       ></link>
+
       <AppSidebar />
       <div className="wrapper d-flex flex-column min-vh-100 bg-light">
         <AppHeader />
