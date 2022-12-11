@@ -38,7 +38,7 @@ const _nav = [
       {
         component: CNavItem,
         name: "Thời khóa biểu",
-        to: "#",
+        to: "/teacher/calendar",
       },
       {
         component: CNavItem,

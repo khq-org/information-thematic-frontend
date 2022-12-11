@@ -87,7 +87,7 @@ const _nav = [
       },
       {
         component: CNavItem,
-        name: "Lịch thi",
+        name: "Lịch ",
         to: "/exam",
       },
     ],

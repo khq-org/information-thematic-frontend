@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import "@coreui/coreui/dist/css/coreui.min.css";
+
 import CITY from "../vn/CITY.json";
 import DISTRICT from "../vn/DISTRICT.json";
 
@@ -79,35 +79,6 @@ export const SchoolDetail = () => {
       } catch (e) {}
     })();
   }, []);
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const { data } = await axios.get(
-  //         "https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1"
-  //       );
-  //       setlistcity(data.data.data);
-  //     } catch (e) {}
-  //   })();
-  // }, []);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const { data } = await axios.get(
-  //         "https://vn-public-apis.fpo.vn/districts/getAll?limit=-1"
-  //       );
-  //       setlistdistrict(data.data.data);
-  //     } catch (e) {}
-  //   })();
-  // }, []);
-  // const setadd = async (code) => {
-  //   const c = listcity.find((item) => item.code === code);
-  //   setcity(c.name);
-  //   const { data } = await axios.get(
-  //     `https://vn-public-apis.fpo.vn/districts/getByProvince?provinceCode=${code}&limit=-1`
-  //   );
-  //   setlistdistrict(data.data.data);
-  // };
 
   const create = async (e) => {
     e.preventDefault();
@@ -157,231 +128,242 @@ export const SchoolDetail = () => {
 
   return (
     <>
-      <div className="container rounded bg-gradient mt-0 mb-0">
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/icon?family=Material+Icons"
-        ></link>
-        <div className="row">
-          <form className="col-md-7 border-right" onSubmit={save}>
-            <div className="p-3 py-5">
-              <div>
-                <h1 className="text-center">School Details</h1>
-              </div>
+      <CModal
+        alignment="center"
+        visible={visible}
+        onClose={() => setVisible(false)}
+      >
+        <CModalHeader>
+          <CModalTitle>
+            <h2>Create account schooladmin</h2>
+          </CModalTitle>
+        </CModalHeader>
+        <CModalBody>
+          <form onSubmit={create}>
+            <div className="col-md-12">
+              <b>First Name</b>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="first name"
+                onChange={(e) => setfirstName(e.target.value)}
+                required
+              />
+            </div>
 
-              <table className="table">
-                <tr>
-                  <td>
-                    <b>Name School</b>
-                  </td>
-                  <td>
-                    {" "}
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={school}
-                      onChange={(e) => setschool(e.target.value)}
-                      required
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>Phone</b>
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={phone}
-                      onChange={(e) => setphone(e.target.value)}
-                      required
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>Street</b>
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={street}
-                      onChange={(e) => setstreet(e.target.value)}
-                      required
-                    />
-                  </td>
-                </tr>
+            <div className="col-md-12">
+              <b>Last Name</b>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="last name"
+                onChange={(e) => setlastName(e.target.value)}
+                required
+              />
+            </div>
 
-                <tr>
-                  <td>
-                    <b>District</b>
-                  </td>
-                  <td>
-                    <CFormSelect
-                      value={district}
-                      onChange={(e) => setdistrict(e.target.value)}
-                    >
-                      {listdistrict.map((item) => (
-                        <option value={item.name} label={item.name}></option>
-                      ))}
-                    </CFormSelect>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>City</b>
-                  </td>
-                  <td>
-                    <CFormSelect
-                      value={listcity.find((item) => item.name === city)?.code}
-                      onChange={(e) => setadd(e.target.value)}
-                    >
-                      {listcity.map((item) => (
-                        <option value={item.code} label={item.name}></option>
-                      ))}
-                    </CFormSelect>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <b>Website</b>
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={website}
-                      onChange={(e) => setwebsite(e.target.value)}
-                      required
-                    />
-                  </td>
-                </tr>
-              </table>
-
-              <div className="mt-5 text-center">
-                <button
-                  className="btn btn-primary profile-button"
-                  type="submit"
-                >
-                  Save profile
-                </button>
-              </div>
+            <div className="col-md-12">
+              <b>Email</b>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="email"
+                onChange={(e) => setemail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="mt-5 text-center">
+              <button className="btn btn-primary " type="submit">
+                Create
+              </button>
             </div>
           </form>
-          <div className="col-md-4">
-            <div className="p-3 py-5 mx-auto">
-              <br />
-              <br />
-
-              <div className="">
-                <h3>Account </h3>
-              </div>
-
-              <CModal
-                alignment="center"
-                visible={visible}
-                onClose={() => setVisible(false)}
-              >
-                <CModalHeader>
-                  <CModalTitle>
-                    <h2>Create account schooladmin</h2>
-                  </CModalTitle>
-                </CModalHeader>
-                <CModalBody>
-                  <form onSubmit={create}>
-                    <div className="col-md-12">
-                      <b>First Name</b>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="first name"
-                        onChange={(e) => setfirstName(e.target.value)}
-                        required
-                      />
+        </CModalBody>
+      </CModal>
+      <div style={{ marginLeft: "300px", marginRight: "50px" }}>
+        <table>
+          <tr>
+            <td style={{ width: "50%" }}>
+              <div>
+                <form onSubmit={save}>
+                  <div>
+                    <br />
+                    <div>
+                      <h1 className="text-center">School Details</h1>
                     </div>
 
-                    <div className="col-md-12">
-                      <b>Last Name</b>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="last name"
-                        onChange={(e) => setlastName(e.target.value)}
-                        required
-                      />
-                    </div>
+                    <table className="table ">
+                      <tr>
+                        <td>
+                          <b>Name School</b>
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            className="form-control"
+                            value={school}
+                            onChange={(e) => setschool(e.target.value)}
+                            required
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <b>Phone</b>
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            className="form-control"
+                            value={phone}
+                            onChange={(e) => setphone(e.target.value)}
+                            required
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <b>Street</b>
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            className="form-control"
+                            value={street}
+                            onChange={(e) => setstreet(e.target.value)}
+                            required
+                          />
+                        </td>
+                      </tr>
 
-                    <div className="col-md-12">
-                      <b>Email</b>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="email"
-                        onChange={(e) => setemail(e.target.value)}
-                        required
-                      />
-                    </div>
+                      <tr>
+                        <td>
+                          <b>District</b>
+                        </td>
+                        <td>
+                          <CFormSelect
+                            value={district}
+                            onChange={(e) => setdistrict(e.target.value)}
+                          >
+                            {listdistrict.map((item) => (
+                              <option
+                                value={item.name}
+                                label={item.name}
+                              ></option>
+                            ))}
+                          </CFormSelect>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <b>City</b>
+                        </td>
+                        <td>
+                          <CFormSelect
+                            value={
+                              listcity.find((item) => item.name === city)?.code
+                            }
+                            onChange={(e) => setadd(e.target.value)}
+                          >
+                            {listcity.map((item) => (
+                              <option
+                                value={item.code}
+                                label={item.name}
+                              ></option>
+                            ))}
+                          </CFormSelect>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <b>Website</b>
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            className="form-control"
+                            value={website}
+                            onChange={(e) => setwebsite(e.target.value)}
+                            required
+                          />
+                        </td>
+                      </tr>
+                    </table>
+
                     <div className="mt-5 text-center">
-                      <button className="btn btn-primary " type="submit">
-                        Create
+                      <button
+                        className="btn btn-primary profile-button"
+                        type="submit"
+                      >
+                        Save profile
                       </button>
                     </div>
-                  </form>
-                </CModalBody>
-              </CModal>
-
-              <br />
-              <table className="table  ">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>UserName</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {listaccount.map((item) => (
-                    <tr key={item.schoolAdminId}>
-                      <td>{item.schoolAdminId}</td>
-                      <td>{item.username}</td>
-                      <td>
-                        {item.lastName} {item.firstName}
-                      </td>
-                      <td>{item.email}</td>
-
-                      <td>
-                        <Link
-                          to={`adminschooldetail/${item.schoolAdminId}`}
-                          className="edit"
-                          title="Edit"
-                          cshools-toggle="tooltip"
-                        >
-                          <i className="material-icons">&#xE254;</i>
-                        </Link>
-
-                        <Link
-                          onClick={() => del(item.schoolAdminId)}
-                          className="delete"
-                          title="Delete"
-                          cshools-toggle="tooltip"
-                        >
-                          <i className="material-icons">&#xE872;</i>
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              <div className="text-end">
-                <CButton onClick={() => setVisible(!visible)}>Create</CButton>
+                  </div>
+                </form>
               </div>
-            </div>
-          </div>
-        </div>
+            </td>
+            <td></td>
+            <td style={{ width: "40%" }}>
+              <div className=" border-left">
+                <div className="">
+                  <div className="text-center">
+                    <h3>Account </h3>
+                  </div>
+
+                  <br />
+                  <table className="table  ">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>UserName</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {listaccount.map((item) => (
+                        <tr key={item.schoolAdminId}>
+                          <td>{item.schoolAdminId}</td>
+                          <td>{item.username}</td>
+                          <td>
+                            {item.lastName} {item.firstName}
+                          </td>
+                          <td>{item.email}</td>
+
+                          <td>
+                            <Link
+                              to={`adminschooldetail/${item.schoolAdminId}`}
+                              className="edit"
+                              title="Edit"
+                              cshools-toggle="tooltip"
+                            >
+                              <i className="material-icons">&#xE254;</i>
+                            </Link>
+
+                            <Link
+                              onClick={() => del(item.schoolAdminId)}
+                              className="delete"
+                              title="Delete"
+                              cshools-toggle="tooltip"
+                            >
+                              <i className="material-icons">&#xE872;</i>
+                            </Link>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  <div className="text-end">
+                    <CButton onClick={() => setVisible(!visible)}>
+                      Create
+                    </CButton>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </table>
       </div>
     </>
   );
