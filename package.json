@@ -42,6 +42,8 @@
     "@fullcalendar/timegrid": "^5.11.3",
     "@mui/material": "^5.10.14",
     "@reduxjs/toolkit": "^1.8.5",
+    "@sentry/react": "^7.26.0",
+    "@sentry/tracing": "^7.26.0",
     "@toast-ui/react-calendar": "^2.1.3",
     "antd": "^4.24.1",
     "axios": "^0.25.0",
