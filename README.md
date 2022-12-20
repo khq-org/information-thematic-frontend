@@ -1,1 +1,1 @@
-information-thematic-fe
+information-thematic-fe Relase version
